@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:form_builder_train/register.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 
 class RegistrationPage extends StatefulWidget {
@@ -201,17 +202,20 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     color: const Color.fromARGB(255, 252, 249, 249),
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: Center(
-                    child: RichText(
-                      text: TextSpan(
-                        text: "Don't Have an Account",
-                        children: [
-                          TextSpan(
-                            text: " RegisterNow?",
-                            style: TextStyle(color: Colors.pink)
-                          )
-                        ]
-                      )),
+                  child: ElevatedButton(
+                    onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context)=>Registrations())),
+                    child: Center(
+                      child: RichText(
+                        text: TextSpan(
+                          text: "Don't Have an Account",
+                          children: [
+                            TextSpan(
+                              text: " RegisterNow?",
+                              style: TextStyle(color: Colors.pink)
+                            )
+                          ]
+                        )),
+                    ),
                   ),
                 ),
                )             
