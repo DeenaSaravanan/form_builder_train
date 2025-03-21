@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:responsive_framework/responsive_wrapper.dart';
 
 class Registrations extends StatefulWidget {
   const Registrations({super.key});
@@ -21,7 +22,9 @@ class _RegistrationsState extends State<Registrations> {
           child: FormBuilder(
             key: _formkey,
             child: Padding(
-              padding: EdgeInsets.all(20),
+              padding: EdgeInsets.symmetric(
+                horizontal: ResponsiveWrapper.of(context).isSmallerThan(MOBILE) ? 20 : 100,
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
