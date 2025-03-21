@@ -5,12 +5,14 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 class RegistrationPage extends StatefulWidget {
+  const RegistrationPage({super.key});
+
   @override
-  _RegistrationPageState createState() => _RegistrationPageState();
+  RegistrationPageState createState() => RegistrationPageState();
 }
 
-class _RegistrationPageState extends State<RegistrationPage> {
- // bool _isPasswordVisible = false;
+class RegistrationPageState extends State<RegistrationPage> {
+  // bool _isPasswordVisible = false;
   final _formKey = GlobalKey<FormBuilderState>();
 
   @override
@@ -18,46 +20,28 @@ class _RegistrationPageState extends State<RegistrationPage> {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(
-  horizontal: ResponsiveWrapper.of(context).isSmallerThan(TABLET) ? 20 : 100,
-          ),
+          padding: EdgeInsets.symmetric(horizontal: ResponsiveWrapper.of(context).isSmallerThan(TABLET) ? 20 : 100),
           child: FormBuilder(
             key: _formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(height: 25),
-                Text("Flyte", style: TextStyle(fontSize: 40)),
+                Text("Flyte", style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Theme.of(context).colorScheme.primary)),
                 SizedBox(height: 5),
                 Text("Let's Get You Login!", style: TextStyle(fontSize: 30)),
                 SizedBox(height: 5),
-                Text(
-                  "Enter Your Information Below",
-                  style: TextStyle(color: Colors.grey),
-                ),
+                Text("Enter Your Information Below", style: TextStyle(color: Colors.grey)),
                 SizedBox(height: 15),
                 Row(
                   children: [
-                    Expanded(
-                      child: GestureDetector(
-                        child: socialLoginButton('images/google.png', "Google"),
-                      ),
-                    ),
+                    Expanded(child: GestureDetector(child: socialLoginButton('images/google.png', "Google"))),
                     SizedBox(width: 15),
-                    Expanded(
-                      child: GestureDetector(
-                        child: socialLoginButton('images/facebook.png', "Facebook"),
-                      ),
-                    ),
+                    Expanded(child: GestureDetector(child: socialLoginButton('images/facebook.png', "Facebook"))),
                   ],
                 ),
                 SizedBox(height: 20),
-                Center(
-                  child: Text(
-                    'Or login with',
-                    style: TextStyle(color: Colors.grey, fontSize: 18),
-                  ),
-                ),
+                Center(child: Text('Or login with', style: TextStyle(color: Colors.grey, fontSize: 18))),
                 SizedBox(height: 15),
                 _buildTextField("email", "Enter Email", Icons.email, false),
                 SizedBox(height: 15),
@@ -65,10 +49,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 SizedBox(height: 5),
                 Align(
                   alignment: Alignment.centerRight,
-                  child: TextButton(
-                    onPressed: () {},
-                    child: Text("Forgot Password?", style: TextStyle(color: Colors.purpleAccent)),
-                  ),
+                  child: TextButton(onPressed: () {}, child: Text("Forgot Password?", style: TextStyle(color: Colors.purpleAccent))),
                 ),
                 SizedBox(
                   width: double.infinity,
@@ -91,25 +72,14 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     height: 50,
                     width: double.infinity,
                     padding: EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      color: const Color.fromARGB(255, 252, 249, 249),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
+                    decoration: BoxDecoration(color: const Color.fromARGB(255, 252, 249, 249), borderRadius: BorderRadius.circular(10)),
                     child: ElevatedButton(
-                      onPressed: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => Registrations()),
-                      ),
+                      onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => Registrations())),
                       child: Center(
                         child: RichText(
                           text: TextSpan(
                             text: "Don't Have an Account",
-                            children: [
-                              TextSpan(
-                                text: " Register Now?",
-                                style: TextStyle(color: Colors.pink),
-                              ),
-                            ],
+                            children: [TextSpan(text: " Register Now?", style: TextStyle(color: Colors.pink))],
                           ),
                         ),
                       ),
@@ -132,15 +102,11 @@ class _RegistrationPageState extends State<RegistrationPage> {
         prefixIcon: Icon(icon),
         hintText: hint,
         hintStyle: TextStyle(color: Colors.grey),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
         filled: true,
         fillColor: Color.fromARGB(255, 243, 240, 240),
       ),
-      validator: FormBuilderValidators.compose([
-        FormBuilderValidators.required(errorText: '$name is required'),
-      ]),
+      validator: FormBuilderValidators.compose([FormBuilderValidators.required(errorText: '$name is required')]),
     );
   }
 
@@ -151,24 +117,11 @@ class _RegistrationPageState extends State<RegistrationPage> {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
-            blurRadius: 4,
-            offset: Offset(0, 2),
-          ),
-        ],
+        boxShadow: [BoxShadow(color: Colors.grey.withOpacity(0.5), blurRadius: 4, offset: Offset(0, 2))],
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.asset(imagePath, height: 20),
-          SizedBox(width: 10),
-          Text(
-            text,
-            style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
-          ),
-        ],
+        children: [Image.asset(imagePath, height: 20), SizedBox(width: 10), Text(text, style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500))],
       ),
     );
   }
