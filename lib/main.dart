@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:form_builder_train/login.dart';
+import 'package:form_builder_train/app/routes.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 void main() {
@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       builder:
           (context, widget) => ResponsiveWrapper.builder(
             widget,
@@ -25,7 +25,8 @@ class MyApp extends StatelessWidget {
             ],
           ),
       debugShowCheckedModeBanner: false,
-      home: RegistrationPage(),
+      routerConfig: Routes().router,
+
     );
   }
 }

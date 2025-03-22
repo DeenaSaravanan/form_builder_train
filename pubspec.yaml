@@ -38,6 +38,12 @@ dependencies:
   form_builder_validators: ^11.1.2
   responsive_framework: ^0.2.0
   responsive_builder: ^0.7.1
+  go_router: ^13.1.0
+  bloc: ^9.0.0
+  equatable: ^2.0.5
+  flutter_bloc: ^9.1.0
+  firebase_auth: ^5.5.1
+  http: ^1.3.0
 
 dev_dependencies:
   flutter_test:

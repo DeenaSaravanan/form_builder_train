@@ -11,7 +11,7 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ResponsiveValue<Widget>(
           context,
-          defaultValue: const LoginDesktop(),
+          defaultValue: const LoginMobile(),
           valueWhen: [const Condition.smallerThan(name: DESKTOP, value: LoginMobile())],
         ).value ??
         LoginDesktop();
