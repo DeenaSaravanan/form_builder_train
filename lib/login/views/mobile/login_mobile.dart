@@ -130,7 +130,7 @@ class _LoginMobileState extends State<LoginMobile> {
                             children: [
                               TextSpan(
                                 text: " Register Now?",
-                                style: TextStyle(color: Colors.pink),
+                                style: TextStyle(color: Theme.of(context).colorScheme.tertiary),
                               ),
                             ],
                           ),
