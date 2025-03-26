@@ -6,6 +6,7 @@ import 'package:form_builder_train/register/bloc/register_event.dart';
 import 'package:form_builder_train/register/bloc/register_state.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:responsive_framework/responsive_wrapper.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class RegisterMobile extends StatefulWidget {
   const RegisterMobile({super.key});
@@ -25,7 +26,7 @@ class _RegisterMobileState extends State<RegisterMobile> {
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
           child: SafeArea(
-            minimum: EdgeInsets.only(top: 10),
+            minimum: const EdgeInsets.only(top: 10),
             child: FormBuilder(
               key: _formkey,
               child: Padding(
@@ -38,27 +39,27 @@ class _RegisterMobileState extends State<RegisterMobile> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       "Flyte",
                       style: TextStyle(
                         fontSize: 35,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(height: 10),
-                    Text(
+                    const SizedBox(height: 10),
+                    const Text(
                       "Register Now!",
                       style: TextStyle(
                         fontSize: 30,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(height: 8),
-                    Text(
+                    const SizedBox(height: 8),
+                    const Text(
                       "Enter Your Informations Below",
                       style: TextStyle(color: Colors.grey),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     FormBuilderTextField(
                       name: 'username',
                       decoration: _inputDecoration("Name"),
@@ -72,7 +73,7 @@ class _RegisterMobileState extends State<RegisterMobile> {
                         ),
                       ]),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     FormBuilderTextField(
                       name: "email",
                       decoration: _inputDecoration("Email Address"),
@@ -85,7 +86,7 @@ class _RegisterMobileState extends State<RegisterMobile> {
                         ),
                       ]),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     FormBuilderTextField(
                       name: "mobile",
                       decoration: _inputDecoration("Mobile Number"),
@@ -104,18 +105,29 @@ class _RegisterMobileState extends State<RegisterMobile> {
                         ),
                       ]),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     FormBuilderDropdown<String>(
                       name: "country",
                       decoration: _inputDecoration("Country"),
                       validator: FormBuilderValidators.required(
                         errorText: "Please select a country",
                       ),
-                      items: ["United States", "India", "United Kingdom", "Canada", "Australia"]
-                          .map((country) => DropdownMenuItem(value: country, child: Text(country)))
+                      items: [
+                        "United States",
+                        "India",
+                        "United Kingdom",
+                        "Canada",
+                        "Australia",
+                      ]
+                          .map(
+                            (country) => DropdownMenuItem(
+                              value: country,
+                              child: Text(country),
+                            ),
+                          )
                           .toList(),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     FormBuilderDropdown<String>(
                       name: "city",
                       decoration: _inputDecoration("Select City"),
@@ -123,27 +135,31 @@ class _RegisterMobileState extends State<RegisterMobile> {
                         errorText: "Please Select City",
                       ),
                       items: ["Tamilnadu", "Kerala", "Andhra", "Karnataka"]
-                          .map((city) => DropdownMenuItem(value: city, child: Text(city)))
+                          .map(
+                            (city) => DropdownMenuItem(
+                              value: city,
+                              child: Text(city),
+                            ),
+                          )
                           .toList(),
                     ),
-                    SizedBox(height: 25),
+                    const SizedBox(height: 25),
                     SizedBox(
                       width: double.infinity,
                       height: 65,
                       child: BlocConsumer<RegisterBloc, RegisterState>(
                         listener: (context, state) {
                           if (state.status == RegisterStatus.success) {
-                            Future.delayed(Duration(milliseconds: 500), () {
+                            Future.delayed(const Duration(milliseconds: 500), () {
                               ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
+                                const SnackBar(
                                   content: Text("Registration Successful!"),
                                   backgroundColor: Colors.green,
                                 ),
                               );
                             });
                           } else if (state.status == RegisterStatus.failure) {
-                            Future.delayed(Duration(milliseconds: 500), () {
-                              
+                            Future.delayed(const Duration(milliseconds: 500), () {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   content: Text(state.message ?? "Error"),
@@ -157,50 +173,39 @@ class _RegisterMobileState extends State<RegisterMobile> {
                           return ElevatedButton(
                             onPressed: state.status == RegisterStatus.loading
                                 ? null
-                                : () {
+                                : () async {
                                     if (_formkey.currentState!.saveAndValidate()) {
                                       final data = _formkey.currentState!.value;
-                                       ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text("Processing Registration..."),
-              backgroundColor: Colors.blueAccent,
-              duration: Duration(seconds: 2), // Ensure visibility
-            ),
-                                       );
-                                       Future.delayed(Duration(milliseconds: 500), () {
-  context.read<RegisterBloc>().add(
-    OnRegisterEvent(
-      username: data["username"],  
-      email: data["email"],  
-      mobile: data["mobile"],  
-      country: data["country"],  
-      city: data["city"], 
-    ),
-  );
-});
-
-                                    
+                                      await _saveUserData(data);
+                                      context.read<RegisterBloc>().add(
+                                            OnRegisterEvent(
+                                              username: data["username"],
+                                              email: data["email"],
+                                              mobile: data["mobile"],
+                                              country: data["country"],
+                                              city: data["city"], password: null,
+                                            ),
+                                          );
                                     }
                                   },
-                                
-                
                             style: ElevatedButton.styleFrom(
-                              minimumSize: Size(50, 50),
-                              backgroundColor: Color.fromRGBO(121, 0, 87, 1),
+                              backgroundColor:
+                                  const Color.fromRGBO(121, 0, 87, 1),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               foregroundColor: Colors.white,
                             ),
                             child: state.status == RegisterStatus.loading
-                            
-                                ? CircularProgressIndicator(color: Colors.white)
-                                : Text("Register"),
+                                ? const CircularProgressIndicator(
+                                    color: Colors.white,
+                                  )
+                                : const Text("Register"),
                           );
                         },
                       ),
                     ),
-                    SizedBox(height: 90),
+                    const SizedBox(height: 90),
                     InkWell(
                       onTap: () {},
                       child: SizedBox(
@@ -210,13 +215,15 @@ class _RegisterMobileState extends State<RegisterMobile> {
                           onPressed: () {},
                           child: Center(
                             child: RichText(
-                              text: TextSpan(
+                              text: const TextSpan(
                                 text: "Already a Member?",
                                 style: TextStyle(color: Colors.black),
                                 children: [
                                   TextSpan(
                                     text: " Login",
-                                    style: TextStyle(color: Colors.purpleAccent),
+                                    style: TextStyle(
+                                      color: Colors.purpleAccent,
+                                    ),
                                   ),
                                 ],
                               ),
@@ -235,34 +242,20 @@ class _RegisterMobileState extends State<RegisterMobile> {
     );
   }
 
+  Future<void> _saveUserData(Map<String, dynamic> data) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString("username", data["username"]);
+    await prefs.setString("email", data["email"]);
+    await prefs.setString("mobile", data["mobile"]);
+    await prefs.setString("country", data["country"]);
+    await prefs.setString("city", data["city"]);
+  }
+
   InputDecoration _inputDecoration(String label) {
     return InputDecoration(
       labelText: label,
-      labelStyle: const TextStyle(
-        color: Color.fromARGB(255, 203, 31, 233),
-        fontSize: 16,
-      ),
-      floatingLabelBehavior: FloatingLabelBehavior.always,
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
-        borderSide: const BorderSide(
-          color: Color.fromARGB(255, 214, 98, 235),
-          width: 2,
-        ),
-      ),
-      enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
-        borderSide: const BorderSide(
-          color: Colors.purpleAccent,
-          width: 2,
-        ),
-      ),
-      focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
-        borderSide: const BorderSide(
-          color: Colors.purple,
-          width: 2,
-        ),
       ),
     );
   }
