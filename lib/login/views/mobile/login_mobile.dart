@@ -17,7 +17,9 @@ class LoginMobile extends StatefulWidget {
 }
 
 class _LoginMobileState extends State<LoginMobile> {
+  
   final _formKey = GlobalKey<FormBuilderState>();
+  bool _isPasswordVisible=false;
 
   @override
   Widget build(BuildContext context) {
@@ -35,14 +37,16 @@ class _LoginMobileState extends State<LoginMobile> {
                 SizedBox(height: 25),
                 Text(
                   "Flyte",
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        color: Theme.of(context).colorScheme.primary,
+                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                        color: Colors.black,
                       ),
                 ),
                 SizedBox(height: 5),
-                Text("Let's Get You Login!", style: TextStyle(fontSize: 30)),
+                Text("Let's Get You Login!", style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                  color: Colors.black
+                )),
                 SizedBox(height: 5),
-                Text("Enter Your Information Below", style: TextStyle(color: Colors.grey)),
+                Text("Enter Your Information Below", style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.grey)),
                 SizedBox(height: 15),
                 Row(
                   children: [
@@ -61,20 +65,21 @@ class _LoginMobileState extends State<LoginMobile> {
                 ),
                 SizedBox(height: 20),
                 Center(
-                  child: Text('Or login with', style: TextStyle(color: Colors.grey, fontSize: 18)),
+                  child: Text('--------------Or login with----------------', style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Colors.black)),
                 ),
                 SizedBox(height: 15),
-                _buildTextField("username", "Enter Username", Icons.person, false),
+                _buildTextField("username", "Enter Email", Icons.person, true),
                 SizedBox(height: 15),
-                _buildTextField("password", "Password", Icons.password_outlined, true),
-                SizedBox(height: 5),
+                _buildTextField("password", "Enter Password", Icons.password, false),
+                SizedBox(height: 10),
                 Align(
                   alignment: Alignment.centerRight,
                   child: TextButton(
                     onPressed: () {},
-                    child: Text("Forgot Password?", style: TextStyle(color: Colors.purpleAccent)),
+                    child: Text("Forgot Password?", style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.pinkAccent)),
                   ),
                 ),
+                SizedBox(height: 20,),
                 SizedBox(
                   width: double.infinity,
                   height: 50,
@@ -103,6 +108,8 @@ class _LoginMobileState extends State<LoginMobile> {
                                       );
                                 }
                               },
+
+                            
                         child: state is LoginLoading
                             ? CircularProgressIndicator(color: Colors.white)
                             : Text("Login"),
@@ -110,36 +117,32 @@ class _LoginMobileState extends State<LoginMobile> {
                     },
                   ),
                 ),
-                SizedBox(height: 30),
-                InkWell(
-                  onTap: () => context.goNamed(RouteNames.register),
-                  child: Container(
-                    height: 50,
-                    width: double.infinity,
-                    padding: EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      color: const Color.fromARGB(255, 252, 249, 249),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: ElevatedButton(
-                      onPressed: () => context.goNamed(RouteNames.register),
-                      child: Center(
-                        child: RichText(
-                          text: TextSpan(
-                            text: "Don't Have an Account",
-                            children: [
-                              TextSpan(
-                                text: " Register Now?",
-                                style: TextStyle(color: Theme.of(context).colorScheme.tertiary),
-                              ),
-                            ],
+                SizedBox(height: 75),
+                SizedBox(
+                  height: 50, 
+                  width: double.maxFinite,
+                  child: InkWell(
+                    onTap: () => context.goNamed(RouteNames.register),         
+                        child: Center(
+                          child: RichText(
+                            text: TextSpan(
+                              text: "Don't Have an Account?",
+                              style: Theme.of(context).textTheme.bodyMedium,
+                              children: [
+                                TextSpan(
+                                  text: " Register Now",
+                                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                    color: Colors.pink
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ),
                 ),
-              ],
+                             
+              ]
             ),
           ),
         ),
@@ -147,18 +150,31 @@ class _LoginMobileState extends State<LoginMobile> {
     );
   }
 
+
   Widget _buildTextField(String name, String hint, IconData icon, bool obscure) {
     return FormBuilderTextField(
       name: name,
       obscureText: obscure,
       decoration: InputDecoration(
-        prefixIcon: Icon(icon),
+        prefixIcon: Icon(
+          name=="username"? Icons.mail : Icons.lock, color: Colors.grey,
+        ),
         hintText: hint,
+        iconColor: Colors.white,
         hintStyle: TextStyle(color: Colors.grey),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-        filled: true,
-        fillColor: Color.fromARGB(255, 243, 240, 240),
-      ),
+             suffixIcon: name == "password"
+          ? IconButton(
+              icon: Icon(_isPasswordVisible ? Icons.visibility : Icons.visibility_off, color: Colors.grey,),
+              onPressed: () {
+                setState(() {
+                  _isPasswordVisible = !_isPasswordVisible; 
+                });
+              },
+            )
+          : null, 
+    ),
+      
       validator: FormBuilderValidators.compose([
         FormBuilderValidators.required(errorText: '$name is required'),
         if (name == "username") ...[

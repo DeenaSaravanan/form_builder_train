@@ -1,63 +1,17 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_builder_train/app/routes.dart';
 import 'package:form_builder_train/login/views/mobile/loginbloc/login_bloc.dart';
+import 'package:form_builder_train/utils/theme.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-
-  ThemeData themeData = ThemeData.light(); // Default theme
-
-  try {
-    final String jsonString = await rootBundle.loadString('assets/material-theme.json');
-    final Map<String, dynamic> jsonData = jsonDecode(jsonString);
-
-    // Extract only the "light" theme from the JSON
-    final Map<String, dynamic> lightTheme = jsonData['schemes']['light'];
-
-    themeData = createThemeFromJson(lightTheme);
-  } catch (e) {
-    print("Error loading theme: $e");
-  }
-
-  runApp(MyApp(themeData));
-}
-
-ThemeData createThemeFromJson(Map<String, dynamic> lightScheme) {
-  return ThemeData(
-    colorScheme: ColorScheme(
-      brightness: Brightness.light,
-      primary: parseColor(lightScheme['primary']),
-      onPrimary: parseColor(lightScheme['onPrimary']),
-      secondary: parseColor(lightScheme['secondary']),
-      onSecondary: parseColor(lightScheme['onSecondary']),
-      tertiary: parseColor(lightScheme['tertiary']),
-      onTertiary: parseColor(lightScheme['onTertiary']),
-      error: parseColor(lightScheme['error']),
-      onError: parseColor(lightScheme['onError']),
-      background: parseColor(lightScheme['background']),
-      onBackground: parseColor(lightScheme['onBackground']),
-      surface: parseColor(lightScheme['surface']),
-      onSurface: parseColor(lightScheme['onSurface']),
-      surfaceVariant: parseColor(lightScheme['surfaceVariant']),
-      onSurfaceVariant: parseColor(lightScheme['onSurfaceVariant']),
-      outline: parseColor(lightScheme['outline']),
-    ),
-  );
-}
-
-// Function to convert HEX string to Flutter Color
-Color parseColor(String hexColor) {
-  hexColor = hexColor.replaceAll("#", ""); // Remove `#`
-  return Color(int.parse("0xFF$hexColor")); // Convert to Color
+  WidgetsFlutterBinding.ensureInitialized(); // Ensure Flutter services are initialized
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  final ThemeData themeData;
-  const MyApp(this.themeData, {Key? key}) : super(key: key);
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -66,9 +20,12 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => LoginBloc()),
       ],
       child: MaterialApp.router(
-        theme: themeData, // Use the parsed theme
+        themeMode: ThemeMode.system,
+        theme: TAppTheme.lightTheme,
+        darkTheme: TAppTheme.darkTheme,
         builder: (context, widget) => ResponsiveWrapper.builder(
-          widget,
+          
+          widget ?? Container(), 
           maxWidth: 1200,
           minWidth: 450,
           defaultScale: true,
