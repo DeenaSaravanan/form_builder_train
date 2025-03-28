@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:form_builder_train/register/views/Register_Desktop.dart';
-import 'package:form_builder_train/register/views/Register_mobile.dart';
+import 'package:form_builder_train/register/views/register_desktop.dart';
+import 'package:form_builder_train/register/views/register_mobile.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 class RegisterPage extends StatelessWidget {

@@ -21,7 +21,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
 
         emit(state.copyWith(status: RegisterStatus.success, message: "Registration successful"));
       } catch (e) {
-        print("❌ Error Saving Data: $e");
+        print("$e");
         emit(state.copyWith(status: RegisterStatus.failure, message: "Failed to register"));
       }
     });

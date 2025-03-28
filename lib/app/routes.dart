@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:form_builder_train/app/route_names.dart';
 import 'package:form_builder_train/home/home.dart';
 import 'package:form_builder_train/login/views/login_page.dart';
-import 'package:form_builder_train/register/views/Register_mobile.dart';
+import 'package:form_builder_train/register/views/register_mobile.dart';
 import 'package:go_router/go_router.dart';
 
 class Routes {
