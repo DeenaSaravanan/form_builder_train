@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_builder_train/app/routes.dart';
-import 'package:form_builder_train/login/views/mobile/loginbloc/login_bloc.dart';
+import 'package:form_builder_train/login/views/mobile/bloc/login_bloc.dart';
 import 'package:form_builder_train/utils/theme.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 

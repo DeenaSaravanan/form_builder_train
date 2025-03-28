@@ -5,6 +5,7 @@ import 'package:form_builder_train/app/route_names.dart';
 import 'package:form_builder_train/register/bloc/register_bloc.dart';
 import 'package:form_builder_train/register/bloc/register_event.dart';
 import 'package:form_builder_train/register/bloc/register_state.dart';
+import 'package:form_builder_train/register/models/register_model.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:go_router/go_router.dart';
 import 'package:responsive_framework/responsive_wrapper.dart';
@@ -176,11 +177,13 @@ class _RegisterMobileState extends State<RegisterMobile> {
                                         await _saveUserData(data);
                                         context.read<RegisterBloc>().add(
                                               OnRegisterEvent(
-                                                username: data["username"],
-                                                email: data["email"],
-                                                mobile: data["mobile"],
-                                                country: data["country"],
-                                                city: data["city"], password: null,
+                                                registerModel: RegisterModel(
+                                                  username: data['username'],
+                                                  email: data['email'],
+                                                  mobile: data['mobile'],
+                                                  country: data['country'],
+                                                  city: data['city']),
+                                               
                                               ),
                                             );
                                       }

@@ -10,17 +10,18 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
 
       try {
         final prefs = await SharedPreferences.getInstance();
-        await prefs.setString('username', event.username);
-        await prefs.setString('email', event.email);
-        await prefs.setString('mobile', event.mobile);
-        await prefs.setString('country', event.country);
-        await prefs.setString('city', event.city);
+        
+        await prefs.setString('username', event.registerModel.username);
+        await prefs.setString('email', event.registerModel.email);
+        await prefs.setString('mobile', event.registerModel.mobile);
+        await prefs.setString('country', event.registerModel.country);
+        await prefs.setString('city', event.registerModel.city);
 
-        print("✅ Data Saved: ${event.username}, ${event.email}, ${event.mobile}");
+        print("${event.toString()}");
 
-        emit(state.copyWith(status: RegisterStatus.success));
+        emit(state.copyWith(status: RegisterStatus.success, message: "Registration successful"));
       } catch (e) {
-        print("❌ Error: $e");
+        print("❌ Error Saving Data: $e");
         emit(state.copyWith(status: RegisterStatus.failure, message: "Failed to register"));
       }
     });
