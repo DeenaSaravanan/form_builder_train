@@ -76,7 +76,8 @@ class _LoginMobileState extends State<LoginMobile> {
                   alignment: Alignment.centerRight,
                   child: TextButton(
                     onPressed: () {},
-                    child: Text("Forgot Password?", style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.pinkAccent)),
+                    child: Text("Forgot Password?",
+                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.pinkAccent)),
                   ),
                 ),
                 SizedBox(height: 20,),
@@ -162,7 +163,7 @@ class _LoginMobileState extends State<LoginMobile> {
         hintText: hint,
         iconColor: Colors.white,
         hintStyle: TextStyle(color: Colors.grey),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide(color: Colors.grey)),
              suffixIcon: name == "password"
           ? IconButton(
               icon: Icon(_isPasswordVisible ? Icons.visibility : Icons.visibility_off, color: Colors.grey,),

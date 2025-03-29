@@ -4,9 +4,12 @@ import 'package:form_builder_train/app/routes.dart';
 import 'package:form_builder_train/login/views/mobile/bloc/login_bloc.dart';
 import 'package:form_builder_train/utils/theme.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized(); // Ensure Flutter services are initialized
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 
@@ -23,6 +26,16 @@ class MyApp extends StatelessWidget {
         themeMode: ThemeMode.system,
         theme: TAppTheme.lightTheme,
         darkTheme: TAppTheme.darkTheme,
+        locale:  Locale("en"),
+        supportedLocales: [
+          Locale('en'),
+          Locale('ta'),
+        ],
+        localizationsDelegates: [
+          AppLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+        ],
         builder: (context, widget) => ResponsiveWrapper.builder(
           
           widget ?? Container(), 

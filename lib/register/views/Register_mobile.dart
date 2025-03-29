@@ -10,6 +10,7 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:go_router/go_router.dart';
 import 'package:responsive_framework/responsive_wrapper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class RegisterMobile extends StatefulWidget {
   const RegisterMobile({super.key});
@@ -49,7 +50,7 @@ class _RegisterMobileState extends State<RegisterMobile> {
                       ),
                       const SizedBox(height: 10),
                        Text(
-                        "Register Now!",
+                        AppLocalizations.of(context).registernow,
                         style: TextTheme.of(context).titleMedium?.copyWith(color: Colors.black)
                       ),
                       const SizedBox(height: 8),
@@ -59,11 +60,11 @@ class _RegisterMobileState extends State<RegisterMobile> {
                       ),
                       const SizedBox(height: 20),
                       FormBuilderTextField(
-                        name: 'username',
+                        name: AppLocalizations.of(context).username,
                         decoration: _inputDecoration("Name"),
                         validator: FormBuilderValidators.compose([
                           FormBuilderValidators.required(
-                            errorText: 'Name is required',
+                            errorText: AppLocalizations.of(context).customer_name_v
                           ),
                           FormBuilderValidators.minLength(
                             5,
@@ -80,7 +81,7 @@ class _RegisterMobileState extends State<RegisterMobile> {
                             errorText: 'Email is required',
                           ),
                           FormBuilderValidators.email(
-                            errorText: 'Enter a valid email address',
+                            errorText: AppLocalizations.of(context).email_id_v
                           ),
                         ]),
                       ),
@@ -91,7 +92,7 @@ class _RegisterMobileState extends State<RegisterMobile> {
                         keyboardType: TextInputType.phone,
                         validator: FormBuilderValidators.compose([
                           FormBuilderValidators.required(
-                            errorText: "Mobile number is required",
+                            errorText: AppLocalizations.of(context).customer_name_v,
                           ),
                           FormBuilderValidators.minLength(
                             10,
@@ -148,10 +149,10 @@ class _RegisterMobileState extends State<RegisterMobile> {
                         child: BlocConsumer<RegisterBloc, RegisterState>(
                           listener: (context, state) {
                             if (state.status == RegisterStatus.success) {
-                              Future.delayed(const Duration(milliseconds: 500), () {
+                              Future.delayed(Duration(milliseconds: 500), () {
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text("Registration Successful!"),
+                                   SnackBar(
+                                    content: Text(AppLocalizations.of(context).registersuccess),
                                     backgroundColor: Colors.green,
                                   ),
                                 );
@@ -200,7 +201,7 @@ class _RegisterMobileState extends State<RegisterMobile> {
                                   ? const CircularProgressIndicator(
                                       color: Colors.white,
                                     )
-                                  : const Text("Register"),
+                                  :  Text(AppLocalizations.of(context).register),
                             );
                           },
                         ),
@@ -216,11 +217,11 @@ class _RegisterMobileState extends State<RegisterMobile> {
                                   padding: const EdgeInsets.only(top: 40),
                                   child: RichText(
                                     text:  TextSpan(
-                                      text: "Already a Member?",
+                                       text: AppLocalizations.of(context).login_link,
                                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.black), 
                                       children: [
                                         TextSpan(
-                                          text: " Login",
+                                          text: AppLocalizations.of(context).login,
                                           style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.pink)
                                         ),
                                       ],
