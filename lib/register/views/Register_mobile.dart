@@ -68,7 +68,7 @@ class _RegisterMobileState extends State<RegisterMobile> {
                           ),
                           FormBuilderValidators.minLength(
                             5,
-                            errorText: 'Name must be at least 5 characters',
+                            errorText: AppLocalizations.of(context).usererror_v,
                           ),
                         ]),
                       ),
@@ -96,11 +96,11 @@ class _RegisterMobileState extends State<RegisterMobile> {
                           ),
                           FormBuilderValidators.minLength(
                             10,
-                            errorText: "Must be 10 digits",
+                            errorText: AppLocalizations.of(context).minimum10,
                           ),
                           FormBuilderValidators.maxLength(
                             10,
-                            errorText: "Must be 10 digits",
+                            errorText: AppLocalizations.of(context).maximum10,
                           ),
                         ]),
                       ),
@@ -111,13 +111,7 @@ class _RegisterMobileState extends State<RegisterMobile> {
                         validator: FormBuilderValidators.required(
                           errorText: AppLocalizations.of(context).country_v,
                         ),
-                        items: [
-                          "United States",
-                          "India",
-                          "United Kingdom",
-                          "Canada",
-                          "Australia",
-                        ]
+                        items: AppLocalizations.of(context).countries.split(',')
                             .map(
                               (country) => DropdownMenuItem(
                                 value: country,
@@ -133,7 +127,7 @@ class _RegisterMobileState extends State<RegisterMobile> {
                         validator: FormBuilderValidators.required(
                           errorText: AppLocalizations.of(context).city_v,
                         ),
-                        items: ["Tamilnadu", "Kerala", "Andhra", "Karnataka"]
+                        items: AppLocalizations.of(context).cities.split(',')
                             .map(
                               (city) => DropdownMenuItem(
                                 value: city,

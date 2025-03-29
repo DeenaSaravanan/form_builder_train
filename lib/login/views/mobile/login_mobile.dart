@@ -53,13 +53,13 @@ class _LoginMobileState extends State<LoginMobile> {
                   children: [
                     Expanded(
                       child: GestureDetector(
-                        child: socialLoginButton('images/google.png', "Google"),
+                        child: socialLoginButton('images/google.png', AppLocalizations.of(context).google),
                       ),
                     ),
                     SizedBox(width: 15),
                     Expanded(
                       child: GestureDetector(
-                        child: socialLoginButton('images/facebook.png', "Facebook"),
+                        child: socialLoginButton('images/facebook.png', AppLocalizations.of(context).facebook),
                       ),
                     ),
                   ],
@@ -119,7 +119,7 @@ class _LoginMobileState extends State<LoginMobile> {
                     },
                   ),
                 ),
-                SizedBox(height: 75),
+                SizedBox(height: 45),
                 SizedBox(
                   height: 50, 
                   width: double.maxFinite,
