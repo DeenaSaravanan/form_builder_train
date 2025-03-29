@@ -8,6 +8,7 @@ import 'package:form_builder_train/login/views/mobile/bloc/login_state.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:go_router/go_router.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LoginMobile extends StatefulWidget {
   const LoginMobile({super.key});
@@ -42,11 +43,11 @@ class _LoginMobileState extends State<LoginMobile> {
                       ),
                 ),
                 SizedBox(height: 5),
-                Text("Let's Get You Login!", style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                Text(AppLocalizations.of(context).getlogin, style: Theme.of(context).textTheme.titleLarge?.copyWith(
                   color: Colors.black
                 )),
                 SizedBox(height: 5),
-                Text("Enter Your Information Below", style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.grey)),
+                Text(AppLocalizations.of(context).enterinfo, style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.grey)),
                 SizedBox(height: 15),
                 Row(
                   children: [
@@ -65,18 +66,18 @@ class _LoginMobileState extends State<LoginMobile> {
                 ),
                 SizedBox(height: 20),
                 Center(
-                  child: Text('--------------Or login with----------------', style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Colors.black)),
+                  child: Text(AppLocalizations.of(context).orloginwith, style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Colors.black)),
                 ),
                 SizedBox(height: 15),
-                _buildTextField("username", "Enter Email", Icons.person, true),
+                _buildTextField("username", AppLocalizations.of(context).enteremail, Icons.person, true),
                 SizedBox(height: 15),
-                _buildTextField("password", "Enter Password", Icons.password, false),
+                _buildTextField("password", AppLocalizations.of(context).enterpassword, Icons.password, false),
                 SizedBox(height: 10),
                 Align(
                   alignment: Alignment.centerRight,
                   child: TextButton(
                     onPressed: () {},
-                    child: Text("Forgot Password?",
+                    child: Text(AppLocalizations.of(context).forgotpassword,
                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.pinkAccent)),
                   ),
                 ),
@@ -113,7 +114,7 @@ class _LoginMobileState extends State<LoginMobile> {
                             
                         child: state is LoginLoading
                             ? CircularProgressIndicator(color: Colors.white)
-                            : Text("Login"),
+                            : Text(AppLocalizations.of(context).login),
                       );
                     },
                   ),
@@ -127,11 +128,11 @@ class _LoginMobileState extends State<LoginMobile> {
                         child: Center(
                           child: RichText(
                             text: TextSpan(
-                              text: "Don't Have an Account?",
+                              text: AppLocalizations.of(context).donthaveaccount,
                               style: Theme.of(context).textTheme.bodyMedium,
                               children: [
                                 TextSpan(
-                                  text: " Register Now",
+                                  text: AppLocalizations.of(context).registernow,
                                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                     color: Colors.pink
                                   ),

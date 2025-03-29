@@ -11,7 +11,7 @@ import 'package:go_router/go_router.dart';
 import 'package:responsive_framework/responsive_wrapper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
+ 
 class RegisterMobile extends StatefulWidget {
   const RegisterMobile({super.key});
 
@@ -55,13 +55,13 @@ class _RegisterMobileState extends State<RegisterMobile> {
                       ),
                       const SizedBox(height: 8),
                        Text(
-                        "Enter Your Informations Below",
+                        AppLocalizations.of(context).enterinfo,
                         style: TextTheme.of(context).bodyMedium?.copyWith(color: Colors.grey),
                       ),
                       const SizedBox(height: 20),
                       FormBuilderTextField(
                         name: AppLocalizations.of(context).username,
-                        decoration: _inputDecoration("Name"),
+                        decoration: _inputDecoration(AppLocalizations.of(context).name),
                         validator: FormBuilderValidators.compose([
                           FormBuilderValidators.required(
                             errorText: AppLocalizations.of(context).customer_name_v
@@ -75,10 +75,10 @@ class _RegisterMobileState extends State<RegisterMobile> {
                       const SizedBox(height: 20),
                       FormBuilderTextField(
                         name: "email",
-                        decoration: _inputDecoration("Email Address"),
+                        decoration: _inputDecoration(AppLocalizations.of(context).emailaddress),
                         validator: FormBuilderValidators.compose([
                           FormBuilderValidators.required(
-                            errorText: 'Email is required',
+                            errorText: AppLocalizations.of(context).email_id_v
                           ),
                           FormBuilderValidators.email(
                             errorText: AppLocalizations.of(context).email_id_v
@@ -88,7 +88,7 @@ class _RegisterMobileState extends State<RegisterMobile> {
                       const SizedBox(height: 20),
                       FormBuilderTextField(
                         name: "mobile",
-                        decoration: _inputDecoration("Mobile Number"),
+                        decoration: _inputDecoration(AppLocalizations.of(context).mobile_number),
                         keyboardType: TextInputType.phone,
                         validator: FormBuilderValidators.compose([
                           FormBuilderValidators.required(
@@ -107,9 +107,9 @@ class _RegisterMobileState extends State<RegisterMobile> {
                       const SizedBox(height: 20),
                       FormBuilderDropdown<String>(
                         name: "country",
-                        decoration: _inputDecoration("Country"),
+                        decoration: _inputDecoration(AppLocalizations.of(context).country),
                         validator: FormBuilderValidators.required(
-                          errorText: "Please select a country",
+                          errorText: AppLocalizations.of(context).country_v,
                         ),
                         items: [
                           "United States",
@@ -131,7 +131,7 @@ class _RegisterMobileState extends State<RegisterMobile> {
                         name: "city",
                         decoration: _inputDecoration("Select City"),
                         validator: FormBuilderValidators.required(
-                          errorText: "Please Select City",
+                          errorText: AppLocalizations.of(context).city_v,
                         ),
                         items: ["Tamilnadu", "Kerala", "Andhra", "Karnataka"]
                             .map(
