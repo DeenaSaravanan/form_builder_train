@@ -1,34 +1,38 @@
 import 'package:equatable/equatable.dart';
 
+abstract class LoginState extends Equatable {
+  final Map<String, String>? formValues;
 
-abstract class LoginState extends Equatable{}
-
-class LoginInitial extends LoginState{
-  @override
-  List<Object?> get props => [];
+  const LoginState({this.formValues=const{}});
   
+  @override
+  List<Object?> get props => [formValues];
 }
 
-class LoginLoading extends LoginState{
-  @override
-  List<Object?> get props => [];
-  
+class LoginInitial extends LoginState {
+  const LoginInitial();
 }
 
-class LoginSuccess extends LoginState{
+class LoginLoading extends LoginState {
+  const LoginLoading();
+}
+
+class LoginSuccess extends LoginState {
   final String username;
 
-  LoginSuccess({required this.username});
+  const LoginSuccess({required this.username, Map<String, String>? formValues})
+      : super(formValues: formValues);
+
   @override
-  List<Object?> get props => [username];
-   
+  List<Object?> get props => [username, formValues];
 }
 
-class LoginFailure extends LoginState{
+class LoginFailure extends LoginState {
   final String error;
 
-  LoginFailure({required this.error});
+  const LoginFailure({required this.error, Map<String, String>? formValues})
+      : super(formValues: formValues);
+
   @override
-  List<Object?> get props => [error];
-  
+  List<Object?> get props => [error, formValues];
 }

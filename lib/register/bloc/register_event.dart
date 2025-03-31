@@ -9,22 +9,21 @@ abstract class RegisterEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class OnFormValueChange extends RegisterEvent{
+class OnFormValueChange extends RegisterEvent {
   final String field;
   final String value;
 
   const OnFormValueChange({required this.field, required this.value});
-
-  @override
-  List<Object> get props=> [field, value];
 }
 
-class OnRegisterEvent extends RegisterEvent{
+class OnRegisterEvent extends RegisterEvent {
   final RegisterModel registerModel;
 
   const OnRegisterEvent({required this.registerModel});
+}
 
- @override
- List<Object> get props => [registerModel];
+class FetchCitiesForCountry extends RegisterEvent {
+  final String country;
 
+  const FetchCitiesForCountry({required this.country});
 }
