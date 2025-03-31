@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_train/app/route_names.dart';
-import 'package:form_builder_train/login/views/mobile/bloc/login_bloc.dart';
-import 'package:form_builder_train/login/views/mobile/bloc/login_event.dart';
-import 'package:form_builder_train/login/views/mobile/bloc/login_state.dart';
+import 'package:form_builder_train/login/bloc/login_bloc.dart';
+import 'package:form_builder_train/login/bloc/login_event.dart';
+import 'package:form_builder_train/login/bloc/login_state.dart';
+import 'package:form_builder_train/login/models/login_model.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:go_router/go_router.dart';
 import 'package:responsive_framework/responsive_framework.dart';
@@ -102,12 +103,11 @@ class _LoginMobileState extends State<LoginMobile> {
                             : () {
                                 if (_formKey.currentState?.saveAndValidate() ?? false) {
                                   final formValues = _formKey.currentState!.value;
-                                  context.read<LoginBloc>().add(
-                                        LoginSubmit(
-                                          username: formValues["username"],
-                                          password: formValues["password"],
-                                        ),
-                                      );
+                                  final loginModel= LoginModel(
+                                    username: formValues["username"],
+                                     password: formValues["password"],
+                                     );
+                                     context.read<LoginBloc>().add(LoginSubmit(loginModel: loginModel));
                                 }
                               },
 

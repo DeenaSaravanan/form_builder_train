@@ -3,6 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'login_event.dart';
 import 'login_state.dart';
 
+
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   LoginBloc() : super(LoginInitial()) {
     on<LoginSubmit>(_onLoginSubmitted);
@@ -14,13 +15,16 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     emit(LoginLoading());
 
     await Future.delayed(Duration(seconds: 1));
+    
+    final String username = event.loginModel.username;
+    final String password = event.loginModel.password;
 
-    if (event.username == "username" && event.password == "password") {
+    if (username == "username" && password == "password") {
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setString("username", event.username);
+      await prefs.setString("username", username);
       await prefs.setBool("isLoggedIn", true);
 
-      emit(LoginSuccess(username: event.username));
+      emit(LoginSuccess(username: username));
     } else {
       emit(LoginFailure(error: "Invalid username or password"));
     }

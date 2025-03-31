@@ -21,7 +21,7 @@ class LoginSuccess extends LoginState{
   LoginSuccess({required this.username});
   @override
   List<Object?> get props => [username];
-  
+   
 }
 
 class LoginFailure extends LoginState{

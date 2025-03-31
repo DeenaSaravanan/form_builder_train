@@ -5,12 +5,20 @@ import 'register_state.dart';
 
 class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   RegisterBloc() : super(const RegisterState()) {
+    
+    on<OnFormValueChange>((event, emit) {
+      final updatedValues = Map<String, String>.from(state.formValues)
+        ..[event.field] = event.value;
+
+      emit(state.copyWith(formValues: updatedValues));
+    });
+
     on<OnRegisterEvent>((event, emit) async {
       emit(state.copyWith(status: RegisterStatus.loading));
 
       try {
         final prefs = await SharedPreferences.getInstance();
-        
+
         await prefs.setString('username', event.registerModel.username);
         await prefs.setString('email', event.registerModel.email);
         await prefs.setString('mobile', event.registerModel.mobile);

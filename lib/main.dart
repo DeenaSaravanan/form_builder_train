@@ -1,20 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_builder_train/app/routes.dart';
-import 'package:form_builder_train/login/views/mobile/bloc/login_bloc.dart';
+import 'package:form_builder_train/login/bloc/login_bloc.dart';
 import 'package:form_builder_train/utils/theme.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const MyApp());
+  String language=await getSavedLanguage();
+  runApp(MyApp(language: language,));
+}
+
+Future<String> getSavedLanguage() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  return prefs.getString('language') ?? 'en'; 
+
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  final String language;
+   const MyApp({super.key, required this.language});
 
   @override
   Widget build(BuildContext context) {

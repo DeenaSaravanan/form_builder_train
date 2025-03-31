@@ -9,7 +9,6 @@ import 'package:form_builder_train/register/models/register_model.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:go_router/go_router.dart';
 import 'package:responsive_framework/responsive_wrapper.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
  
 class RegisterMobile extends StatefulWidget {
@@ -62,6 +61,9 @@ class _RegisterMobileState extends State<RegisterMobile> {
                       FormBuilderTextField(
                         name: AppLocalizations.of(context).username,
                         decoration: _inputDecoration(AppLocalizations.of(context).name),
+                       onChanged: (value){
+                        context.read<RegisterBloc>().add(OnFormValueChange(field: "username", value: value?? ""));
+                       },
                         validator: FormBuilderValidators.compose([
                           FormBuilderValidators.required(
                             errorText: AppLocalizations.of(context).customer_name_v
@@ -76,6 +78,9 @@ class _RegisterMobileState extends State<RegisterMobile> {
                       FormBuilderTextField(
                         name: "email",
                         decoration: _inputDecoration(AppLocalizations.of(context).emailaddress),
+                        onChanged: (value){
+                          context.read<RegisterBloc>().add(OnFormValueChange(field: "email", value: value?? ""));
+                        },
                         validator: FormBuilderValidators.compose([
                           FormBuilderValidators.required(
                             errorText: AppLocalizations.of(context).email_id_v
@@ -90,6 +95,9 @@ class _RegisterMobileState extends State<RegisterMobile> {
                         name: "mobile",
                         decoration: _inputDecoration(AppLocalizations.of(context).mobile_number),
                         keyboardType: TextInputType.phone,
+                        onChanged: (value){
+                          context.read<RegisterBloc>().add(OnFormValueChange(field: "mobile", value: value?? ""));
+                        },
                         validator: FormBuilderValidators.compose([
                           FormBuilderValidators.required(
                             errorText: AppLocalizations.of(context).customer_name_v,
@@ -108,6 +116,9 @@ class _RegisterMobileState extends State<RegisterMobile> {
                       FormBuilderDropdown<String>(
                         name: "country",
                         decoration: _inputDecoration(AppLocalizations.of(context).country),
+                        onChanged: (value){
+                          context.read<RegisterBloc>().add(OnFormValueChange(field: "country", value: value?? ""));
+                        },
                         validator: FormBuilderValidators.required(
                           errorText: AppLocalizations.of(context).country_v,
                         ),
@@ -124,6 +135,9 @@ class _RegisterMobileState extends State<RegisterMobile> {
                       FormBuilderDropdown<String>(
                         name: "city",
                         decoration: _inputDecoration("Select City"),
+                        onChanged: (value){
+                          context.read<RegisterBloc>().add(OnFormValueChange(field: "city", value: value?? ""));
+                        },
                         validator: FormBuilderValidators.required(
                           errorText: AppLocalizations.of(context).city_v,
                         ),
@@ -143,23 +157,23 @@ class _RegisterMobileState extends State<RegisterMobile> {
                         child: BlocConsumer<RegisterBloc, RegisterState>(
                           listener: (context, state) {
                             if (state.status == RegisterStatus.success) {
-                              Future.delayed(Duration(milliseconds: 500), () {
+                              if(context.mounted) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                    SnackBar(
                                     content: Text(AppLocalizations.of(context).registersuccess),
                                     backgroundColor: Colors.green,
                                   ),
                                 );
-                              });
+                              }
                             } else if (state.status == RegisterStatus.failure) {
-                              Future.delayed(const Duration(milliseconds: 500), () {
+                              if(context.mounted) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
                                     content: Text(state.message ?? "Error"),
                                     backgroundColor: Colors.red,
                                   ),
                                 );
-                              });
+                              }
                             }
                           },
                           builder: (context, state) {
@@ -168,16 +182,15 @@ class _RegisterMobileState extends State<RegisterMobile> {
                                   ? null
                                   : () async {
                                       if (_formkey.currentState!.saveAndValidate()) {
-                                        final data = _formkey.currentState!.value;
-                                        await _saveUserData(data);
-                                        context.read<RegisterBloc>().add(
+                                        final registerBloc=context.read<RegisterBloc>();
+                                          registerBloc.add(
                                               OnRegisterEvent(
                                                 registerModel: RegisterModel(
-                                                  username: data['username'],
-                                                  email: data['email'],
-                                                  mobile: data['mobile'],
-                                                  country: data['country'],
-                                                  city: data['city']),
+                                                  username: registerBloc.state.formValues["username"]?? "",
+                                                  email: registerBloc.state.formValues["email"] ?? "",
+                                                  mobile: registerBloc.state.formValues["mobile"] ?? "",
+                                                  country: registerBloc.state.formValues["country"] ?? "",
+                                                  city: registerBloc.state.formValues["city"] ?? "",),
                                                
                                               ),
                                             );
@@ -236,14 +249,7 @@ class _RegisterMobileState extends State<RegisterMobile> {
     );
   }
 
-  Future<void> _saveUserData(Map<String, dynamic> data) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString("username", data["username"]);
-    await prefs.setString("email", data["email"]);
-    await prefs.setString("mobile", data["mobile"]);
-    await prefs.setString("country", data["country"]);
-    await prefs.setString("city", data["city"]);
-  }
+  
 
   InputDecoration _inputDecoration(String label) {
     return InputDecoration(
